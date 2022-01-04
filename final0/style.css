@@ -1,0 +1,32 @@
+#title_chart {
+    width: 1250px;
+    color: #000000;
+    text-align: center;
+}
+
+#axisGroup {
+    color: black;
+}
+
+path.domain {
+    stroke: black;
+}
+
+path {
+    fill: none;
+    stroke: #00a5e6;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 65px;
+    height: 73px;
+    padding: 2px 5px 2px 5px;
+    font: 10px sans-serif;
+    background: black;
+    color: #F0FFFF;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+  }
