@@ -1,0 +1,27 @@
+#title_chart {
+    width: 800px;
+    color: #255C66;
+    text-align: center;
+}
+
+#axisGroup {
+ color: #255C66;
+ background-color:  #255C66;
+}
+path.domain {
+    stroke: #255C66;
+}
+
+path {
+    fill: none;
+    stroke: #998E2F;
+}
+
+line {
+    color: #998E2F;
+}
+
+circle {
+    fill: #998E2F;
+    stroke: none;
+}
