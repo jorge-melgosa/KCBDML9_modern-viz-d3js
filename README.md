@@ -13,6 +13,8 @@ La gráfica debe representar:
 
 
 #### Thumbnail:
+![Captura de pantalla 2022-01-05 a las 9 18 24](https://user-images.githubusercontent.com/2152086/148192908-7351343d-350e-4746-b406-118c462e7141.png)
+
 
 
 ## Practica Opción 2
@@ -28,4 +30,5 @@ La gráfica debe representar:
 
 
 #### Thumbnail:
+![Captura de pantalla 2022-01-05 a las 9 18 48](https://user-images.githubusercontent.com/2152086/148192940-f8072107-ce2c-4193-a46d-58b4bfbf1423.png)
 
