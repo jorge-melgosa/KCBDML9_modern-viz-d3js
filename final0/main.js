@@ -1,3 +1,7 @@
+// ----------------------------------------------------------
+// Utils
+// ----------------------------------------------------------
+
 function numFormatter(num) {
     if(num > 999 && num < 1000000){
         return (num/1000).toFixed(1) + 'K';
@@ -16,6 +20,9 @@ function getDataToltip(d) {
                 Vol: ${numFormatter(d.volume*1000000)}`;
    return text;
 }
+
+// ----------------------------------------------------------
+// ----------------------------------------------------------
 
 const width = 1250;
 const height = 600;
@@ -36,7 +43,6 @@ const elementGroup = svg.append("g")
                         .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 // Definimos la escala
-//let x = d3.scaleTime().range([0, width - margin.left - margin.right]);
 let x = d3.scaleBand().range([0, width - margin.left - margin.right])
             .paddingInner(0.5)
             .paddingOuter(0.5);
@@ -53,7 +59,6 @@ const yRightAxisGroup = axisGroup.append("g").attr("id", "yRightAxisGroup")
                                         .attr("transform", `translate(${width - margin.right},${margin.top})`);
 
 // Aplicamos las escalas a los ejes
-;
 const yAxis = d3.axisLeft().scale(y);
 const yRigthAxis = d3.axisRight().scale(yRight);
 
@@ -70,15 +75,9 @@ d3.csv('ibex.csv').then (data => {
         d.volume = d.volume/1000000;
     })
 
-    var totalVolume = 0;
-    data2.map(d => {
-        totalVolume = totalVolume + d.volume;
-    });
-    var totalVolumeElement = data2.map(d => d.volume).length;
 
     // aplicamos los limites
     x.domain(data2.map(d => d.date));
-
     const xAxis = d3.axisBottom().scale(x).tickValues(x.domain().filter(function(d,i){ return !(i%10)}));
 
     y.domain(d3.extent(data2.map(d => d.close)));
@@ -94,15 +93,7 @@ d3.csv('ibex.csv').then (data => {
     .attr("transform", "rotate(-40)" );;
     yAxisGroup.call(yAxis);
     yRightAxisGroup.call(yRigthAxis);
-   
 
-    elementGroup.datum(data).append('path')
-        .style("stroke-width", 1.5)
-        .attr('id', 'close')
-        .attr('d', d3.line()
-        .x(d => x(d.date))
-        .y(d => y(d.close))
-    );
 
     // tooltip para mostrar datos
     var tooltip = d3.select("body")
@@ -110,14 +101,24 @@ d3.csv('ibex.csv').then (data => {
     .attr("class", "tooltip")
     .style("visibility", "hidden");
 
+
+    //linea 
+    elementGroup.datum(data).append('path')
+    .style("stroke-width", 1.5)
+    .attr('id', 'close')
+    .attr('d', d3.line()
+    .x(d => x(d.date))
+    .y(d => y(d.close)));
+
+    //barras
     var elementos = elementGroup.selectAll('rect').data(data2);
     elementos.enter().append('rect')
             .attr('id', d => numFormatter(d.volume*1000000))
             .attr("fill", d => {
-                if(d.volume > (totalVolume/totalVolumeElement)) {
-                    return "green"
-                } else {
+                if(d.open > d.close) {
                     return "red"
+                } else {
+                    return "green"
                 }
             })
             .attr('width', x.bandwidth()) 
@@ -127,6 +128,4 @@ d3.csv('ibex.csv').then (data => {
             .on("mouseover", function(d){tooltip.text(getDataToltip(d)); return tooltip.style("visibility", "visible");})
             .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
             .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
-
-    console.log(data);
 });
